@@ -1,16 +1,14 @@
 package com.example.catpus.domain.article.entity;
 
-import com.example.catpus.domain.articleCategory.entity.Category;
+import com.example.catpus.domain.board.entity.Board;
 import com.example.catpus.domain.catInfo.entity.CatInfo;
 import com.example.catpus.domain.comment.entity.Comment;
 import com.example.catpus.domain.user.domain.User;
 import com.example.catpus.global.baseEntity.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
@@ -20,13 +18,14 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
 public class Article extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "Category_id", nullable = false)
-    private Category category;
+    @JoinColumn(name = "board_id", nullable = false)
+    private Board board; // 해당 게시글이 속하는 게시판
 
     private String title; // 제목
     private String content; // 내용

@@ -1,7 +1,9 @@
 package com.example.catpus.domain.catInfo.entity;
 
+import com.example.catpus.domain.board.entity.Board;
 import com.example.catpus.global.baseEntity.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -20,4 +22,7 @@ public class CatInfo extends BaseEntity {
     private String personality; // 성격
     private boolean neutering; // 중성화 여부
     private int chur; // 츄르
+
+    @OneToOne(mappedBy = "catInfo")
+    private Board board;
 }
