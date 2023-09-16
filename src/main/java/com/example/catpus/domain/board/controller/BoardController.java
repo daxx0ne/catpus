@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("user/boards")
-@Tag(name = "Boards", description = "게시판 종류")
+@Tag(name = "Boards", description = "게시판 관련 API")
 public class BoardController {
 
     private final BoardRepository boardRepository;
@@ -25,9 +25,9 @@ public class BoardController {
         this.boardRepository = boardRepository;
     }
 
-    @GetMapping("/all")
-    @Operation(summary ="모든 게시판 조회")
-    public ResponseEntity<List<Board>> getAllBoards() {
+    @GetMapping("/list")
+    @Operation(summary = "게시판 목록 조회")
+    public ResponseEntity<List<Board>> getBoardList() {
         List<Board> boards = boardRepository.findAll();
         return new ResponseEntity<>(boards, HttpStatus.OK);
     }
