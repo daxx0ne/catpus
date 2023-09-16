@@ -34,7 +34,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '5.5.2'
-
+    implementation 'org.modelmapper:modelmapper:2.4.4'
     // jwt
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
