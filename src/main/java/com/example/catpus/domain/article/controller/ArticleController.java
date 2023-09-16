@@ -1,58 +1,65 @@
 package com.example.catpus.domain.article.controller;
 
+import com.example.catpus.domain.article.dto.ArticleDto;
 import com.example.catpus.domain.article.entity.Article;
-import com.example.catpus.domain.article.repository.ArticleRepository;
 import com.example.catpus.domain.article.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/articles")
+@RequestMapping("/user/articles")
 @RequiredArgsConstructor
 @Tag(name = "Article", description = "게시글 생성, 조회, 수정, 삭제 API")
 public class ArticleController {
 
-    private ArticleService articleService;
-    private ArticleRepository articleRepository;
-
-    @Autowired
-    public ArticleController(ArticleService articleService) {
-        this.articleService = articleService;
-    }
+    private final ArticleService articleService;
+    private final ModelMapper modelMapper;
 
     @GetMapping
     @Operation(summary ="모든 게시글 조회")
-    public List<Article> getAllArticles() {
-        return articleService.getAllArticles();
+    public List<ArticleDto> getAllArticles() {
+        List<Article> articles = articleService.getAllArticles();
+        return articles.stream()
+                .map(article -> modelMapper.map(article, ArticleDto.class))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/byBoard/{boardId}")
     @Operation(summary = "특정 게시판 Id로 게시글 조회")
-    public ResponseEntity<List<Article>> getArticlesByBoardId(@PathVariable Long boardId) {
+    public ResponseEntity<List<ArticleDto>> getArticlesByBoardId(@PathVariable Long boardId) {
         List<Article> articles = articleService.getArticlesByBoardId(boardId);
-        return new ResponseEntity<>(articles, HttpStatus.OK);
+        List<ArticleDto> articleDtos = articles.stream()
+                .map(article -> modelMapper.map(article, ArticleDto.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(articleDtos, HttpStatus.OK);
     }
 
     @PostMapping
     @Operation(summary ="게시글 생성")
-    public Article createArticle(@Valid @RequestBody Article article) {
-        return articleService.createArticle(article);
+    public ResponseEntity<ArticleDto> createArticle(@Valid @RequestBody ArticleDto articleDto) {
+        Article article = modelMapper.map(articleDto, Article.class);
+        Article createdArticle = articleService.createArticle(article);
+        ArticleDto createdArticleDto = modelMapper.map(createdArticle, ArticleDto.class);
+        return new ResponseEntity<>(createdArticleDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @Operation(summary ="게시글 수정")
-    public ResponseEntity<Article> updateArticle(@PathVariable Long id, @Valid @RequestBody Article updatedArticle) {
+    public ResponseEntity<ArticleDto> updateArticle(@PathVariable Long id, @Valid @RequestBody ArticleDto updatedArticleDto) {
+        Article updatedArticle = modelMapper.map(updatedArticleDto, Article.class);
         Article article = articleService.updateArticle(id, updatedArticle);
         if (article != null) {
-            return ResponseEntity.ok(article);
+            ArticleDto articleDto = modelMapper.map(article, ArticleDto.class);
+            return ResponseEntity.ok(articleDto);
         } else {
             return ResponseEntity.notFound().build();
         }
