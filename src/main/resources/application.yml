@@ -2,20 +2,20 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/catpus__dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://127.0.0.1:3306/catpus?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
     username: root
     password: pms41414
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-    show-sql: true
     properties:
       hibernate:
-        format_sql: true
+        show-sql: true
+        format_sql:
+        use_sql_comments: true
         dialect: org.hibernate.dialect.MySQL8Dialect # MySQL 버전에 따라 방언 설정
     hibernate:
       ddl-auto: update
-
 
   session:
     store-type: none
@@ -23,6 +23,7 @@ spring:
 
 logging:
   level:
+    root: INFO
     org.hibernate.sql: debug
     org.hibernate.type: trace
 
