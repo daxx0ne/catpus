@@ -20,5 +20,9 @@ public class Comment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
-    private String comment; // 댓글
+    private String text; // 댓글
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }
