@@ -1,28 +1,9 @@
+server:
+  port: 8080
+
 spring:
   profiles:
-    active: dev
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/catpus?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
-    username: root
-    password: pms41414
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    properties:
-      hibernate:
-        show-sql: true
-        format_sql: true
-        use_sql_comments: true
-    hibernate:
-      ddl-auto: update
-
-
-logging:
-  level:
-    root: INFO
-    org.hibernate.sql: debug
-    org.hibernate.type: trace
-    org.hibernate.orm.jdbc.extract: TRACE
+    default: dev
 
 jwt:
   secret:
