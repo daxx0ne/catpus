@@ -1,5 +1,7 @@
 package com.example.catpus.domain.article.dto;
 
+import com.example.catpus.domain.catInfo.entity.CatInfo;
+import com.example.catpus.domain.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,5 +22,9 @@ public class ArticleDto {
     @NotBlank(message = "Content is required")
     private String content;
 
-    // 다른 필드 및 getter/setter 메서드 추가
+    private String photoUrl;
+    private CatInfo catInfo;
+    private User author;
+    private int likeCount;
+    private int commentCount;
 }

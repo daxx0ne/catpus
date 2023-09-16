@@ -12,10 +12,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -48,4 +45,10 @@ public class Article extends BaseEntity {
     @ManyToOne // 작성자 정보 연결
     @JoinColumn(name = "user_id", nullable = false)
     private User author; // 작성자
+
+    @Column(name = "comment_count", nullable = false)
+    private int commentCount;
+
+    @Column(name = "like_count", nullable = false)
+    private int likeCount;
 }

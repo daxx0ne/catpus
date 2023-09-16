@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-    List<Article> findByCatInfo_CatName(String catName);
-    List<Article> findByBoard_Id(Long categoryId);
+    List<Article> findByBoard_Id(Long boardId);
+
 }

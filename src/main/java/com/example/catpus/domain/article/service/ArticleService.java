@@ -2,9 +2,16 @@ package com.example.catpus.domain.article.service;
 
 import com.example.catpus.domain.article.entity.Article;
 import com.example.catpus.domain.article.repository.ArticleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.catpus.domain.comment.repository.CommentRepository;
+import com.example.catpus.domain.like.entity.Like;
+import com.example.catpus.domain.like.repository.LikeRepository;
+import com.example.catpus.domain.user.entity.User;
+import com.example.catpus.domain.user.repository.UserRepository;
+import com.example.catpus.global.exception.ArticleNotFoundException;
+import com.example.catpus.global.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +19,15 @@ import java.util.Optional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
 
-    public ArticleService(ArticleRepository articleRepository) {
+    public ArticleService(ArticleRepository articleRepository, CommentRepository commentRepository, UserRepository userRepository, LikeRepository likeRepository) {
         this.articleRepository = articleRepository;
+        this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
+        this.likeRepository = likeRepository;
     }
 
     public List<Article> getAllArticles() {
@@ -50,4 +63,39 @@ public class ArticleService {
         }
         return false;
     }
+
+    @Transactional
+    public Article addLike(Long articleId, Long userId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new ArticleNotFoundException("Article with id " + articleId + " not found."));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found."));
+
+        Like like = new Like();
+        like.setArticle(article);
+        like.setUser(user);
+        likeRepository.save(like);
+
+        // 게시글의 좋아요 수 1 증가
+        article.setLikeCount(article.getLikeCount() + 1);
+        articleRepository.save(article);
+
+        return article;
+    }
+
+    @Transactional
+    public Article removeLike(Long articleId, Long userId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new ArticleNotFoundException("Article with id " + articleId + " not found."));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found."));
+
+        likeRepository.deleteByArticleAndUser(article, user);
+
+        article.setLikeCount(article.getLikeCount() - 1);
+        return articleRepository.save(article);
+    }
+
 }

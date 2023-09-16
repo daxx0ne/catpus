@@ -33,7 +33,7 @@ public class ArticleController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/byBoard/{boardId}")
+    @GetMapping("/board/{boardId}")
     @Operation(summary = "특정 게시판 Id로 게시글 조회")
     public ResponseEntity<List<ArticleDto>> getArticlesByBoardId(@PathVariable Long boardId) {
         List<Article> articles = articleService.getArticlesByBoardId(boardId);
@@ -71,6 +71,29 @@ public class ArticleController {
         boolean deleted = articleService.deleteArticle(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{id}/like")
+    @Operation(summary ="게시글 좋아요 누르기")
+    public ResponseEntity<ArticleDto> addLikeToArticle(@PathVariable Long id, @RequestParam Long userId) {
+        Article article = articleService.addLike(id, userId);
+        if (article != null) {
+            ArticleDto articleDto = modelMapper.map(article, ArticleDto.class);
+            return ResponseEntity.ok(articleDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @DeleteMapping("/{id}/like")
+    @Operation(summary ="게시글 좋아요 취소")
+    public ResponseEntity<ArticleDto> removeLikeFromArticle(@PathVariable Long id, @RequestParam Long userId) {
+        Article article = articleService.removeLike(id, userId);
+        if (article != null) {
+            ArticleDto articleDto = modelMapper.map(article, ArticleDto.class);
+            return ResponseEntity.ok(articleDto);
         } else {
             return ResponseEntity.notFound().build();
         }
