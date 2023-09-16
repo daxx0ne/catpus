@@ -3,8 +3,8 @@ package com.example.catpus.domain.article.service;
 import com.example.catpus.domain.article.entity.Article;
 import com.example.catpus.domain.article.repository.ArticleRepository;
 import com.example.catpus.domain.comment.repository.CommentRepository;
-import com.example.catpus.domain.like.entity.Like;
-import com.example.catpus.domain.like.repository.LikeRepository;
+import com.example.catpus.domain.love.entity.love;
+import com.example.catpus.domain.love.repository.LoveRepository;
 import com.example.catpus.domain.user.entity.User;
 import com.example.catpus.domain.user.repository.UserRepository;
 import com.example.catpus.global.exception.ArticleNotFoundException;
@@ -21,13 +21,13 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
-    private final LikeRepository likeRepository;
+    private final LoveRepository loveRepository;
 
-    public ArticleService(ArticleRepository articleRepository, CommentRepository commentRepository, UserRepository userRepository, LikeRepository likeRepository) {
+    public ArticleService(ArticleRepository articleRepository, CommentRepository commentRepository, UserRepository userRepository, LoveRepository loveRepository) {
         this.articleRepository = articleRepository;
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
-        this.likeRepository = likeRepository;
+        this.loveRepository = loveRepository;
     }
 
     public List<Article> getAllArticles() {
@@ -72,10 +72,10 @@ public class ArticleService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found."));
 
-        Like like = new Like();
-        like.setArticle(article);
-        like.setUser(user);
-        likeRepository.save(like);
+        love love = new love();
+        love.setArticle(article);
+        love.setUser(user);
+        loveRepository.save(love);
 
         // 게시글의 좋아요 수 1 증가
         article.setLikeCount(article.getLikeCount() + 1);
@@ -92,7 +92,7 @@ public class ArticleService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found."));
 
-        likeRepository.deleteByArticleAndUser(article, user);
+        loveRepository.deleteByArticleAndUser(article, user);
 
         article.setLikeCount(article.getLikeCount() - 1);
         return articleRepository.save(article);

@@ -1,4 +1,4 @@
-package com.example.catpus.domain.like.entity;
+package com.example.catpus.domain.love.entity;
 
 import com.example.catpus.domain.article.entity.Article;
 import com.example.catpus.domain.user.entity.User;
@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
-public class Like extends BaseEntity {
+public class love extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "article_id", nullable = false)
     private Article article; // 해당 좋아요가 속한 게시글
