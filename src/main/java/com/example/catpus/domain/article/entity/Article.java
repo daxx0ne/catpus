@@ -3,9 +3,8 @@ package com.example.catpus.domain.article.entity;
 import com.example.catpus.domain.board.entity.Board;
 import com.example.catpus.domain.catInfo.entity.CatInfo;
 import com.example.catpus.domain.comment.entity.Comment;
-import com.example.catpus.domain.user.domain.User;
+import com.example.catpus.domain.user.entity.User;
 import com.example.catpus.global.baseEntity.BaseEntity;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +12,10 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class Article extends BaseEntity {
     private String content; // 내용
 
     @OneToMany(mappedBy = "article")
-    private List<Comment> comments;
+    private List<Comment> comment;
 
     @CreatedDate
     private LocalDateTime createDate; // 작성날짜

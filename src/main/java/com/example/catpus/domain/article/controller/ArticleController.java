@@ -1,17 +1,17 @@
 package com.example.catpus.domain.article.controller;
 
 import com.example.catpus.domain.article.entity.Article;
-import com.example.catpus.domain.article.service.ArticleService;
 import com.example.catpus.domain.article.repository.ArticleRepository;
+import com.example.catpus.domain.article.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.RequiredArgsConstructor;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,13 +39,6 @@ public class ArticleController {
     public ResponseEntity<List<Article>> getArticlesByBoardId(@PathVariable Long boardId) {
         List<Article> articles = articleService.getArticlesByBoardId(boardId);
         return new ResponseEntity<>(articles, HttpStatus.OK);
-    }
-
-    // 특정 고양이 이름으로 게시글 조회
-    @GetMapping("/byCatName/{catName}")
-    @Operation(summary ="특정 고양이 이름으로 게시글 조회")
-    public List<Article> getArticlesByCatName(@PathVariable String catName) {
-        return articleRepository.findByCatInfo_CatName(catName); // articleRepository를 사용하여 메서드 호출
     }
 
     @PostMapping
