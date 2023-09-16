@@ -1,6 +1,6 @@
-package com.example.catpus.domain.ment.controller;
+package com.example.catpus.domain.catMent.controller;
 
-import com.example.catpus.domain.ment.repository.MentRepository;
+import com.example.catpus.domain.catMent.repository.MentRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("user/ment")
-@Tag(name = "Ment", description = "고양이 맨트")
+@Tag(name = "Ment", description = "고양이 멘트")
 public class MentController {
     private final MentRepository mentRepository;
 
@@ -22,7 +22,7 @@ public class MentController {
     }
 
     @GetMapping("/random")
-    @Operation(summary ="랜덤으로 고양이 맨트 하나만 조회")
+    @Operation(summary ="랜덤으로 고양이 멘트 하나만 조회")
     public ResponseEntity<String> getRandomCatMent() {
         try {
             // 랜덤한 고양이 맨트 조회

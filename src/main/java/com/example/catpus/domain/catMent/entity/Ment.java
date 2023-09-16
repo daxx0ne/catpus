@@ -1,4 +1,4 @@
-package com.example.catpus.domain.ment.entity;
+package com.example.catpus.domain.catMent.entity;
 
 import com.example.catpus.global.baseEntity.BaseEntity;
 import lombok.Getter;
