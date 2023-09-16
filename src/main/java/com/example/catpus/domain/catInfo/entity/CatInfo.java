@@ -1,6 +1,7 @@
 package com.example.catpus.domain.catInfo.entity;
 
 import com.example.catpus.global.baseEntity.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -19,6 +20,7 @@ public class CatInfo extends BaseEntity {
     private String characteristic; // 특징
     private String personality; // 성격
     private boolean neutering; // 중성화 여부
+    @Builder.Default
     private int chur = 0; // 츄르
 
     public void setChur(int chur) {
