@@ -13,12 +13,8 @@ spring:
         show-sql: true
         format_sql: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.MySQL8Dialect # MySQL 버전에 따라 방언 설정
     hibernate:
       ddl-auto: update
-
-  session:
-    store-type: none
 
 
 logging:
@@ -26,10 +22,8 @@ logging:
     root: INFO
     org.hibernate.sql: debug
     org.hibernate.type: trace
+    org.hibernate.orm.jdbc.extract: TRACE
 
 jwt:
   secret:
     key: x!A%D*G-KaPdSgVkYp3s5v8y/B?E(H+M
-
-server:
-  address: http://101.101.216.159/
