@@ -18,7 +18,8 @@ public class CatInfoService {
     }
 
     @Transactional
-    public CatInfo createCatInfo(CatInfo catInfo) {
+    public CatInfo registerCatInfo(CatInfo catInfo) {
+
         // CatInfo를 저장하고
         CatInfo savedCatInfo = catInfoRepository.save(catInfo);
 
@@ -27,5 +28,10 @@ public class CatInfoService {
         eventPublisher.publishEvent(catInfoCreatedEvent);
 
         return savedCatInfo;
+    }
+
+    @Transactional
+    public CatInfo getCatInfo(Long catInfoId) {
+        return catInfoRepository.findById(catInfoId).orElse(null);
     }
 }

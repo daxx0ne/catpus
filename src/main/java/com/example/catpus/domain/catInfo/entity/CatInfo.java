@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 @ToString(callSuper = true)
 public class CatInfo extends BaseEntity {
     private String photoUrl; // 고양이 사진
+
     private String catName; // 고양이 이름
     private String gender; // 성별
     private String characteristic; // 특징

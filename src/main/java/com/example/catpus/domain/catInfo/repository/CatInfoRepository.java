@@ -6,4 +6,5 @@ import com.example.catpus.domain.catInfo.entity.CatInfo;
 
 @Repository
 public interface CatInfoRepository extends JpaRepository<CatInfo, Long> {
+    boolean existsByCatName(String catName);
 }

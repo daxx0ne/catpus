@@ -16,3 +16,6 @@ import javax.persistence.Entity;
 public class Ment extends BaseEntity {
     private String catSay; // 고양이 맨트
 }
+
+
+
