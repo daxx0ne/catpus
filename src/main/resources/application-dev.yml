@@ -6,7 +6,7 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: jdbc:mysql://localhost:3306/catpus?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://db-illk5-kr.vpc-pub-cdb.ntruss.com:3306/catpus
     username: root
     password: pms41414
     driver-class-name: com.mysql.cj.jdbc.Driver
