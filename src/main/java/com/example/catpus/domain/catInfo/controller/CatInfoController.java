@@ -1,9 +1,11 @@
 package com.example.catpus.domain.catInfo.controller;
 
+import com.example.catpus.domain.catInfo.dto.CatInfoDto;
 import com.example.catpus.domain.catInfo.entity.CatInfo;
 import com.example.catpus.domain.catInfo.service.CatInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class CatInfoController {
 
     private final CatInfoService catInfoService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public CatInfoController(CatInfoService catInfoService) {
+    public CatInfoController(CatInfoService catInfoService, ModelMapper modelMapper) {
         this.catInfoService = catInfoService;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/register")
@@ -46,5 +50,14 @@ public class CatInfoController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // 츄르 증가 API
+    @PostMapping("/yummy/{id}")
+    @Operation(summary ="츄르 냠냠")
+    public ResponseEntity<CatInfoDto> increaseChur(@PathVariable Long id) {
+        CatInfo catInfo = catInfoService.increaseChur(id);
+        CatInfoDto catInfoDto = modelMapper.map(catInfo, CatInfoDto.class);
+        return ResponseEntity.ok(catInfoDto);
     }
 }
