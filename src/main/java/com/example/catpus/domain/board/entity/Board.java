@@ -30,4 +30,22 @@ public class Board extends BaseEntity {
 
     @OneToMany(mappedBy = "board")
     private List<Article> articles; // 해당 게시판의 게시글 목록
+
+    public void setBoardNameFromCatInfo() {
+        if (catInfo != null) {
+            // 고양이 이름을 가져와서 게시판 이름 생성
+            String catName = catInfo.getCatName();
+            if (catName != null) {
+                this.name = catName + " 게시판";
+            }
+        }
+    }
+
+    // 고양이 정보를 기반으로 게시판을 생성하고 저장
+    public static Board createBoardFromCatInfo(CatInfo catInfo) {
+        Board board = new Board();
+        board.setCatInfo(catInfo);
+        board.setBoardNameFromCatInfo();
+        return board;
+    }
 }

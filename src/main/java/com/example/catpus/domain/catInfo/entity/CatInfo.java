@@ -15,7 +15,7 @@ import javax.persistence.Entity;
 public class CatInfo extends BaseEntity {
     private String photoUrl; // 고양이 사진
     private String catName; // 고양이 이름
-    private String age; // 나이
+    private String gender; // 성별
     private String characteristic; // 특징
     private String personality; // 성격
     private boolean neutering; // 중성화 여부
